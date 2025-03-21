@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class AppTest {
@@ -11,6 +12,8 @@ class AppTest {
                 헨리 장
             """
         )
+
+        println(out)
 
         assertThat(out).contains("명언:")
         assertThat(out).contains("작가:")
