@@ -1,4 +1,6 @@
 import domain.system.controller.SystemController
+import domain.wiseSaying.controller.WiseSayingController
+import global.Request
 
 class App {
     fun run() {
