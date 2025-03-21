@@ -4,12 +4,8 @@ import com.think.domain.wiseSaying.service.WiseSayingService
 import domain.wiseSaying.entity.WiseSaying
 import global.Request
 
-class WiseSayingController(
-    var lastId: Int = 0
-) {
-
-    val wiseSayings = mutableListOf<WiseSaying>()
-    val wiseSayingService = WiseSayingService()
+class WiseSayingController{
+    private val wiseSayingService = WiseSayingService()
 
     fun write() {
         print("명언: ")
@@ -17,8 +13,8 @@ class WiseSayingController(
         print("작가: ")
         val author = readlnOrNull() ?: ""
 
-        wiseSayingService.write(saying, author)
-        println("${lastId}번 명언이 등록되었습니다.")
+        val wiseSaying = wiseSayingService.write(saying, author)
+        println("${wiseSaying.id}번 명언이 등록되었습니다.")
     }
 
     fun list() {
@@ -56,26 +52,20 @@ class WiseSayingController(
             return
         }
 
-        val index = wiseSayings.indexOfFirst { it.id == id }
+        val wiseSaying = wiseSayingService.getItem(id)
 
-        if (index == -1) {
-            println("${id}번 명언은 존재하지 않습니다.")
-            return
-        }
+        wiseSaying?.let {
+            println("명언(기존) : ${wiseSaying.saying}")
+            print("명언: ")
+            val saying = readlnOrNull() ?: ""
 
-        val wiseSaying = wiseSayings[index]
+            println("작가(기존) : ${wiseSaying.author}")
+            print("작가: ")
+            val author = readlnOrNull() ?: ""
 
-        println("명언(기존) : ${wiseSaying.saying}")
-        print("명언: ")
-        val saying = readlnOrNull() ?: ""
+            wiseSayingService.modify(wiseSaying, saying, author)
+            println("${id}번 명언을 수정했습니다.")
+        } ?: println("${id}번 명언은 존재하지 않습니다.")
 
-        println("작가(기존) : ${wiseSaying.author}")
-        print("작가: ")
-        val author = readlnOrNull() ?: ""
-
-        val new = wiseSaying.copy(author = author, saying = saying)
-
-        wiseSayings[index] = new
-        println("${id}번 명언을 수정했습니다.")
     }
 }
