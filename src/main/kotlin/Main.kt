@@ -1,4 +1,5 @@
 import domain.wiseSaying.entity.WiseSaying
+import global.Request
 
 fun main() {
 
@@ -11,7 +12,9 @@ fun main() {
         print("명령) ")
         val input = readlnOrNull() ?: ""
 
-        when (input) {
+        val rq = Request(input)
+
+        when (rq.actionName) {
             "종료" -> break
             "등록" -> {
                 print("명언: ")
@@ -30,6 +33,19 @@ fun main() {
                 wiseSayings.forEach {
                     println("${it.id} / ${it.author} / ${it.saying}")
                 }
+            }
+
+            "삭제" -> {
+                rq.getParam("id")?.let {
+                    it.toIntOrNull()?.let {
+                        wiseSayings.removeIf { saying -> saying.id == it }
+                        println("${it}번 명언을 삭제했습니다.")
+                    } ?: println("올바른 번호를 입력해주세요.")
+                } ?: println("삭제할 명언의 번호를 입력해주세요.")
+            }
+
+            else -> {
+                println("알 수 없는 명령입니다.")
             }
         }
     }
