@@ -1,7 +1,6 @@
 package domain.wiseSaying.controller
 
-import com.think.domain.wiseSaying.service.WiseSayingService
-import domain.wiseSaying.entity.WiseSaying
+import domain.wiseSaying.service.WiseSayingService
 import global.Request
 
 class WiseSayingController{
