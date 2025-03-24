@@ -2,6 +2,7 @@ package domain.wiseSaying.repository
 
 import domain.wiseSaying.entity.WiseSaying
 import global.SingletonScope.wiseSayingRepository
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class WiseSayingRepositoryTest {

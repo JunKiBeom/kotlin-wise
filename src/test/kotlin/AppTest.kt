@@ -7,7 +7,7 @@ class AppTest {
 
     @BeforeEach
     fun setUp() {
-        SingletonScope.wiseSayingMemRepository.clear()
+        SingletonScope.wiseSayingRepository.clear()
     }
 
     @Test

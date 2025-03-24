@@ -5,7 +5,7 @@ import global.SingletonScope
 
 class WiseSayingService {
 
-    private val wiseSayingRepository = SingletonScope.wiseSayingMemRepository
+    private val wiseSayingRepository = SingletonScope.wiseSayingRepository
 
     fun write(saying: String, author: String): WiseSaying {
         return wiseSayingRepository.save(WiseSaying(saying = saying, author = author))
