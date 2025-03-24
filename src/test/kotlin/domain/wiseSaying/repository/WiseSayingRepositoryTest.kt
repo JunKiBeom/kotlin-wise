@@ -20,4 +20,10 @@ class WiseSayingRepositoryTest {
 
         assertThat(filePath).isNotNull
     }
+
+    @Test
+    fun `saveLastId, loadLastId`() {
+        wiseSayingRepository.saveLastId(10)
+        assertThat(wiseSayingRepository.loadLastId()).isEqualTo(10)
+    }
 }
