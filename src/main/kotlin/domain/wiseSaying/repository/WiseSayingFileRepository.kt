@@ -43,6 +43,14 @@ class WiseSayingFileRepository : WiseSayingRepository {
         TODO("Not yet implemented")
     }
 
+    fun saveLastId(id: Int) {
+        tableDirPath.resolve("lastId.txt").toFile().writeText(id.toString())
+    }
+
+    fun loadLastId(): Int {
+        return tableDirPath.resolve("lastId.txt").toFile().readText().toInt()
+    }
+
     fun initTable() {
         tableDirPath.toFile().run {
             if (!exists()) {

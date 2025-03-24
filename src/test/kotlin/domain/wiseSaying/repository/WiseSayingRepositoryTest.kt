@@ -1,18 +1,20 @@
 package domain.wiseSaying.repository
 
 import domain.wiseSaying.entity.WiseSaying
-import global.SingletonScope.wiseSayingRepository
+import global.SingletonScope
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class WiseSayingRepositoryTest {
+class WiseSayingFileRepositoryTest {
+
+    private val wiseSayingFileRepository = SingletonScope.wiseSayingFileRepository
 
     @Test
     fun `save`() {
-        val wiseSaying = wiseSayingRepository
+        val wiseSaying = wiseSayingFileRepository
             .save(WiseSaying(saying = "인생은 짧고, 예술은 길다.", author = "헨리 장"))
 
-        val filePath = wiseSayingRepository
+        val filePath = wiseSayingFileRepository
             .tableDirPath
             .toFile()
             .listFiles()
@@ -23,7 +25,7 @@ class WiseSayingRepositoryTest {
 
     @Test
     fun `saveLastId, loadLastId`() {
-        wiseSayingRepository.saveLastId(10)
-        assertThat(wiseSayingRepository.loadLastId()).isEqualTo(10)
+        wiseSayingFileRepository.saveLastId(10)
+        assertThat(wiseSayingFileRepository.loadLastId()).isEqualTo(10)
     }
 }
