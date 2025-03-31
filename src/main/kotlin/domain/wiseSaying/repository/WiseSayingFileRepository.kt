@@ -36,7 +36,11 @@ class WiseSayingFileRepository : WiseSayingRepository {
     }
 
     override fun findById(id: Int): WiseSaying? {
-        TODO("Not yet implemented")
+        return tableDirPath.resolve("${id}.json").toFile()
+            .takeIf {it.exists()}
+            ?.let {
+                WiseSaying.fromJson(it.readText())
+            }
     }
 
     override fun delete(wiseSaying: WiseSaying) {
