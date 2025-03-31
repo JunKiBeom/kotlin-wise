@@ -3,8 +3,9 @@ package domain.wiseSaying.service
 import domain.wiseSaying.entity.WiseSaying
 import global.SingletonScope
 
-class WiseSayingService {
+class WiseSayingService(
 
+) {
     private val wiseSayingRepository = SingletonScope.wiseSayingRepository
 
     fun write(saying: String, author: String): WiseSaying {
@@ -25,5 +26,9 @@ class WiseSayingService {
 
     fun modify(wiseSaying: WiseSaying, saying: String, author: String): WiseSaying {
         return wiseSayingRepository.save(wiseSaying.copy(saying = saying, author = author))
+    }
+
+    fun build() {
+        wiseSayingRepository.build()
     }
 }

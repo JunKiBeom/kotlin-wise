@@ -2,6 +2,7 @@ package domain.wiseSaying.repository
 
 import domain.wiseSaying.entity.WiseSaying
 import global.AppConfig
+import standard.JsonUtil
 import java.nio.file.Path
 
 class WiseSayingFileRepository : WiseSayingRepository {
@@ -22,22 +23,21 @@ class WiseSayingFileRepository : WiseSayingRepository {
         }
     }
 
-    // data/test/wiseSaying/*.json
-    fun saveOnDisk(wiseSaying: WiseSaying) {
+    private fun saveOnDisk(wiseSaying: WiseSaying) {
         tableDirPath.resolve("${wiseSaying.id}.json").toFile().writeText(wiseSaying.jsonStr)
     }
 
     override fun findAll(): List<WiseSaying> {
         return tableDirPath.toFile()
             .listFiles()
-            ?.filter { it.extension == "json"}
+            ?.filter { it.extension == "json" }
             ?.map { WiseSaying.fromJson(it.readText()) }
             .orEmpty()
     }
 
     override fun findById(id: Int): WiseSaying? {
         return tableDirPath.resolve("${id}.json").toFile()
-            .takeIf {it.exists()}
+            .takeIf { it.exists() }
             ?.let {
                 WiseSaying.fromJson(it.readText())
             }
@@ -64,7 +64,7 @@ class WiseSayingFileRepository : WiseSayingRepository {
         }
     }
 
-    fun getNextId(): Int {
+    private fun getNextId(): Int {
         return loadLastId().also {
             saveLastId(it + 1)
         }
@@ -76,5 +76,16 @@ class WiseSayingFileRepository : WiseSayingRepository {
                 mkdirs()
             }
         }
+    }
+
+    fun build() {
+        val mapList = findAll().map {
+            it.map
+        }
+
+        JsonUtil.listToJson(mapList).also {
+            tableDirPath.resolve("data.json").toFile().writeText(it)
+        }
+
     }
 }
