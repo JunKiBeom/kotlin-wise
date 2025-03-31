@@ -31,4 +31,11 @@ class WiseSayingService(
     fun build() {
         wiseSayingRepository.build()
     }
+
+    fun findByKeyword(keywordType: String, keyword: String): List<WiseSaying> {
+        return when (keywordType) {
+            "author" -> return wiseSayingRepository.findByAuthorLike(keyword)
+            else -> return wiseSayingRepository.findBySayingLike(keyword)
+        }
+    }
 }
