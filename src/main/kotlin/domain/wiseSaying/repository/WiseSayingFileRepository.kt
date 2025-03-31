@@ -44,7 +44,7 @@ class WiseSayingFileRepository : WiseSayingRepository {
     }
 
     override fun delete(wiseSaying: WiseSaying) {
-        TODO("Not yet implemented")
+        tableDirPath.resolve("${wiseSaying.id}.json").toFile().delete()
     }
 
     override fun clear() {
