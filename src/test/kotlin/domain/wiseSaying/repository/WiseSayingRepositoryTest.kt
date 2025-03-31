@@ -37,14 +37,18 @@ class WiseSayingFileRepositoryTest {
     }
 
     @Test
-    fun `명언 2개 저장`() {
-        wiseSayingFileRepository
-            .save(WiseSaying(saying = "인생은 짧고, 예술은 길다.", author = "헨리 장"))
-        wiseSayingFileRepository
+    fun `findAll`() {
+        val w1 = wiseSayingFileRepository
+            .save(WiseSaying(saying = "인생은 짧고 예술은 길다.", author = "헨리 장"))
+        val w2 = wiseSayingFileRepository
             .save(WiseSaying(saying = "내 죽음을 적에게 알리지 말라", author = "이순신"))
 
-        val lastId = wiseSayingFileRepository.loadLastId()
+        val result = wiseSayingFileRepository.findAll()
+        val count = result.size
 
-        assertThat(lastId).isEqualTo(3)
+        assertThat(count).isEqualTo(2)
+        assertThat(result).containsExactly(w1, w2)
     }
+
+
 }
